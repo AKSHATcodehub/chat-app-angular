@@ -1,0 +1,115 @@
+  <router-outlet></router-outlet>
+  <div class="main">
+    <div class="container">
+      <div class="active-user-container">
+        <div class="active-user-header">
+          <h3>Chats</h3>
+        </div>
+        <div style="display: flex;justify-content: center;align-items: center;" *ngIf="activeUserArray.length==0">
+          <p style="margin: 15px;"> No Active Users</p>
+        </div>
+        <div
+          *ngFor="let activeUser of activeUserArray"
+          class="active-user pointer"
+          (click)="userSelected(activeUser)"
+        >
+          <p>{{ activeUser.name }}</p>
+        </div>
+      </div>
+
+      <div class="chat-body">
+        <div class="chat-body-header">
+          <div>
+            <img
+              src="./../../../assets/8b167af653c2399dd93b952a48740620.jpg"
+              alt=""
+            />
+            <p>{{ selectedUserName }}</p>
+          </div>
+          <p>{{personName}} [ {{ personId }} ]</p>
+        </div>
+        <div class="footer"  *ngIf="!showImage" >
+          <main class="msger-chat" style="height: 400px">
+            <div class="chat-body">
+              <div class="joined" *ngFor="let item of joinedMessage">
+                <p>{{item}}</p>
+              </div>
+              <div
+                *ngFor="let item of messageArray"
+                [ngClass]="
+                  item?.user == userData.userList[0].name ? 'right' : 'left'
+                "
+              
+              >
+                <div class="msg-info-name msg-text" >{{ item?.user }}</div>
+                <div class="msg-text">
+                  <app-read-more
+                  
+                  *ngIf="item.message.length>50"
+                  [content]="item.message"
+                  [limit]="300"
+                  [completeWords]="true"
+                >
+                </app-read-more>
+                <!-- <div *ngIf="(item.message.length>50)">
+                  {{(readMore) ? item?.message : item?.message | slice:0:50}} <span *ngIf="!readMore">...</span>
+                  <a href="javascript:;" *ngIf="!readMore" (click)="readMore=true">[Read More]</a>
+                  <a href="javascript:;" *ngIf="readMore" (click)="readMore=false">[Read Less]</a>
+
+              </div> -->
+                <ng-container  *ngIf="(item.message.length<=50)">
+                  {{ item?.message }}
+
+                </ng-container>
+                </div>
+              </div>
+            </div>
+          </main>
+          <div class="msger-inputarea">
+            <input
+              type="text"
+              class="msger-input"
+              placeholder="Enter your message..."
+              [(ngModel)]="newMessage"
+              (change)="typing()"
+              id="message-input"
+            />
+            <button
+              type="submit"
+              class="msger-send-btn"
+              (click)="roomId ? sendMessage() : sendMessageToRoom()"
+            >
+              Send
+            </button>
+          </div>
+        </div>
+        <div class="footer" *ngIf="showImage" style="height: 90%; display: flex; justify-content: center;align-items: center;">
+          <img style="height: 50%; width:20%"  src="./../../../assets/no-message.jpg" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div *ngFor="let message of messageList" class="chat-box">
+      <li>
+          {{message}}
+      </li>  
+  </div> -->
+
+  <!-- 
+  <div class="input-box">
+      <input [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()" />
+      <button (click)="sendMessage()">Send </button>
+
+  </div> -->
+  <div class="group-chat">
+    <h2>Group Name :</h2>
+    <input type="text" class="group-name-input" #groupName />
+
+    <button class="room-btn" (click)="groupCreated(groupName.value)">
+      Create Group
+    </button>
+  </div>
+  <!-- 
+  <input type="text" #input >
+  <button (click)="sendMessageToRoom(input.value)">click me</button> -->

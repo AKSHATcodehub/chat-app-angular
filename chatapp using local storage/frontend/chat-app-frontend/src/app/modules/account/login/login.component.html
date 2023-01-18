@@ -1,0 +1,51 @@
+<body>
+  <div id="bg"></div>
+  <div class="form-div">
+  
+    <form [formGroup]="loginForm">
+      <div class="login-heading">
+        <h1>Login</h1>
+      </div>
+      <div class="form-field">
+        <input type="text" placeholder=" Username" required="" #username  formControlName="userName"  />
+        
+      </div>
+      <div class="error" *ngIf="(loginForm.controls.userName.invalid && loginForm.controls.userName.touched && (loginForm.controls.userName.value.length==0))">*required</div>
+      <div class="error" *ngIf="((loginForm.controls.userName.value.trim().length==0) && (loginForm.controls.userName.value.length>0) && loginForm.controls.userName.touched)">*Space is not allowed.</div>
+      <div class="error" *ngIf="loginForm.controls.userName.hasError('pattern') && loginForm.controls.userName.touched && (loginForm.controls.userName.value.length>0)">*Special character are not allowed</div>
+      <div class="error" *ngIf="loginForm.controls.userName.errors?.maxlength">*Maximum 10 character are allowed.</div>
+      <!-- <div class="error" *ngIf="loginForm.controls.userName.errors?.required">Reeeeeeeeeqq</div> -->
+      <div class="form-field">
+        <input type="text" placeholder="Phone No" required="" #phoneno formControlName="phoneNo" />
+      </div>
+      <div class="error" *ngIf="loginForm.controls.phoneNo.invalid && loginForm.controls.phoneNo.touched && loginForm.controls.phoneNo.value.length==0">*required</div>
+      <div class="error" *ngIf="loginForm.controls.phoneNo.errors && loginForm.controls.phoneNo.touched && loginForm.controls.phoneNo.value.length>0" >*Only number allowed.</div>
+      <div class="form-field" >
+        <button class="btn" type="submit" (click)="login(username, phoneno)"  >
+          Log in
+        </button>
+      </div>
+    </form>
+  </div>
+
+
+  <script
+    type="text/javascript"
+    async=""
+    src="https://www.google-analytics.com/analytics.js"
+  ></script>
+  <script
+    async=""
+    src="https://www.googletagmanager.com/gtag/js?id=UA-80520768-2"
+    type="text/javascript"
+  ></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "UA-80520768-2");
+  </script>
+</body>
